@@ -5,17 +5,15 @@ class TargetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: const Center(
-        child: Text(
-          '새로운 페이지',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Text(
+          '로그인',
+          style: TextStyle(fontSize: 25),
       ),
-    );
-  }
+
+          )
+    );}
 }
