@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'transition_route_state.dart';
+import 'next_page.dart';
+import 'radial_expansion_route.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -15,11 +18,21 @@ class MyHomePage extends StatelessWidget {
                 fontSize: 40
             ),
           ),
-          shadowColor: Colors.black,
+          actions:[
+           IconButton(onPressed: () {
+            Navigator.of(context).push(
+              TransitionRouteState(
+                page: const TargetPage(),
+                transition: radialExpansionRoute,
+                duration: const Duration(seconds: 1),
+              ),
+            );
+          },
+          icon: Image.asset('assets/images/profile.png'))
+          ]
         ),
         body: Container(
           child: SingleChildScrollView(
-            child:RefreshIndicator()
               child: Column(
                 children: [
                   Text(
@@ -29,11 +42,13 @@ class MyHomePage extends StatelessWidget {
                         fontSize: 20
                     ),
                   ),
-                  film(),
-                  film(),
-                  film(),
-                  film(),
-                  film()
+                    film(),
+                    film(),
+                    film(),
+                    film(),
+                    film(),
+                    film(),
+                    film()
                 ]
               ),
           ),
