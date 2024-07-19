@@ -1,10 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:delta/model/model_delta.dart';
+import 'package:delta/model/api_adapter.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,8 +23,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  Future<void> _refresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      MobileLayout();
+      DesktopLayout();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +51,19 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth < 600) {
-            // 휴대폰 버전
-            return MobileLayout();
-          } else {
-            // 컴퓨터 버전
-            return DesktopLayout();
-          }
-        },
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 600) {
+              // 휴대폰 버전
+              return MobileLayout();
+            } else {
+              // 컴퓨터 버전
+              return DesktopLayout();
+            }
+          },
+        ),
       ),
     );
   }
@@ -100,7 +121,38 @@ class Film extends StatefulWidget {
 }
 
 class _FilmState extends State<Film> {
+  List<Del> dels = [];
   bool isStarYellow = false;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDels();
+  }
+
+  _fetchDels() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final response = await http.get(Uri.parse('https://drf-delta-api-d357c0ce87e9.herokuapp.com/Delta/1'));
+
+      if(response.statusCode == 200) {
+        setState(() {
+          dels = parseDels(utf8.decode(response.bodyBytes));
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error fetching data: $e');
+    }
+  }
 
   void _showComments(BuildContext context) {
     showModalBottomSheet(
@@ -122,7 +174,7 @@ class _FilmState extends State<Film> {
         return SizedBox(
           width: widget.isWide ? double.infinity : null,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 margin: EdgeInsets.fromLTRB(10, 10, 5, 5),
@@ -218,18 +270,30 @@ class _FilmState extends State<Film> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 10, 10), // 텍스트와 이미지 사이에 공백 없애기
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // 텍스트가 왼쪽 정렬되도록 설정
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '귀여운 고양이',
+                    isLoading
+                        ? CircularProgressIndicator() // Show a loading indicator while fetching data
+                        : dels.isNotEmpty
+                        ? Text(
+                      dels[0].title ?? "no title", // Display the title from the first Del object
+                      style: TextStyle(
+                        fontFamily: 'KB',
+                        fontSize: 25 * textScaleFactor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                        : Text(
+                      'No data available', // Handle case where there's no data
                       style: TextStyle(
                         fontFamily: 'KB',
                         fontSize: 25 * textScaleFactor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+
                     Text(
                       '#귀여운 #고양이 #열공',
                       style: TextStyle(

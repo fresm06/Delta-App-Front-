@@ -28,7 +28,7 @@ Widget _splashLoadingWidget(AsyncSnapshot<Object?> snapshot) {
   if(snapshot.hasError) {
     return const Text("Error!!");
   } else if(snapshot.hasData) {
-    return const MyHomePage();
+    return MyHomePage();
   } else {
     return const IntroScreen();
   }
