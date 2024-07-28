@@ -97,71 +97,81 @@ class MyWidget extends StatelessWidget {
     return ListView(
       scrollDirection: Axis.vertical,
       children: <Widget>[
-        ExpansionTile(
-          leading: const Icon(Icons.book),
-          title: const Text('가장 잘하는 과목'),
-          iconColor: Colors.brown,
-          children: <Widget>[
-            ListTile(
-              title: const Text('수학'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('과학'),
-              onTap: () {},
-            ),
-          ],
+        Card(
+          child: ExpansionTile(
+            leading: const Icon(Icons.book),
+            title: const Text('가장 잘하는 과목'),
+            iconColor: Colors.brown,
+            children: <Widget>[
+              ListTile(
+                title: const Text('수학'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: const Text('과학'),
+                onTap: () {},
+              ),
+            ],
+          ),
         ),
-        ExpansionTile(
-          leading: const Icon(Icons.language),
-          title: const Text('언어'),
-          iconColor: Colors.blue,
-          children: <Widget>[
-            ListTile(
-              title: const Text('영어'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('한국어'),
-              onTap: () {},
-            ),
-          ],
+        Card(
+          child: ExpansionTile(
+            leading: const Icon(Icons.language),
+            title: const Text('언어'),
+            iconColor: Colors.blue,
+            children: <Widget>[
+              ListTile(
+                title: const Text('영어'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: const Text('한국어'),
+                onTap: () {},
+              ),
+            ],
+          ),
         ),
-        ExpansionTile(
-          leading: const Icon(Icons.person_2_outlined),
-          title: const Text('프로필 관리'),
-          children: <Widget>[
-            ListTile(
-              title: const Text('개인 정보 수정'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('비밀번호 변경'),
-              onTap: () {},
-            ),
-          ],
+        Card(
+          child: ExpansionTile(
+            leading: const Icon(Icons.person_2_outlined),
+            title: const Text('프로필 관리'),
+            children: <Widget>[
+              ListTile(
+                title: const Text('개인 정보 수정'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: const Text('비밀번호 변경'),
+                onTap: () {},
+              ),
+            ],
+          ),
         ),
-        ExpansionTile(
-          leading: const Icon(Icons.settings),
-          title: const Text('설정'),
-          children: <Widget>[
-            ListTile(
-              title: const Text('일반'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('알림'),
-              onTap: () {},
-            ),
-          ],
+        Card(
+          child: ExpansionTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('설정'),
+            children: <Widget>[
+              ListTile(
+                title: const Text('일반'),
+                onTap: () {},
+              ),
+              ListTile(
+                title: const Text('알림'),
+                onTap: () {},
+              ),
+            ],
+          ),
         ),
-        ListTile(
-          leading: const Icon(Icons.alarm),
-          title: const Text('알림'),
-          trailing: const SwitchExample(),
-          iconColor: Colors.deepOrange,
-              onTap: () {},
-            ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.alarm),
+            title: const Text('알림'),
+            trailing: const SwitchExample(),
+            iconColor: Colors.deepOrange,
+                onTap: () {},
+              ),
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
