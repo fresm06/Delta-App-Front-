@@ -36,7 +36,7 @@ class _CheckPageState extends State<CheckPage> {
 
   void _stopTimer() {
     _timer?.cancel();
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).pop(
       MaterialPageRoute(builder: (context) => const MyHomePage()),
     );
   }

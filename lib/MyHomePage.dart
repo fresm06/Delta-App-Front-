@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'べんきょう',
+            label: 'Study',
           ),
         ],
         currentIndex: 0,
@@ -165,20 +165,4 @@ Widget radialExpansionRoute(BuildContext context, Animation<double> animation, A
     opacity: animation,
     child: child,
   );
-}
-
-class TargetPage extends StatelessWidget {
-  const TargetPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Target Page"),
-      ),
-      body: const Center(
-        child: Text("This is the target page"),
-      ),
-    );
-  }
 }
