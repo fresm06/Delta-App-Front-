@@ -38,6 +38,8 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   http:
   dio: ^4.0.0
+  shared_preferences:
+  fl_chart:
 
 dev_dependencies:
   flutter_test:

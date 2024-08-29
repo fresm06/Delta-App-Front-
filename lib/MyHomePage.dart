@@ -9,6 +9,7 @@ import 'transition_route_state.dart';
 import 'next_page.dart';
 import 'radial_expansion_route.dart';
 import 'check.dart';
+import 'first_time.dart';
 
 void main() {
   runApp(const MyApp());
@@ -101,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: (int index) {
           if (index == 1) {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const CheckPage()),
+              MaterialPageRoute(builder: (context) => const TimeFoldPage()),
             );
           }
         },

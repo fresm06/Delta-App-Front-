@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'MyHomePage.dart'; // MyHomePage를 import
+import 'first_time.dart';
 
 class CheckPage extends StatefulWidget {
   const CheckPage({super.key});
@@ -36,9 +37,7 @@ class _CheckPageState extends State<CheckPage> {
 
   void _stopTimer() {
     _timer?.cancel();
-    Navigator.of(context).pop(
-      MaterialPageRoute(builder: (context) => MyHomePage()),
-    );
+    Navigator.of(context).pop();
   }
 
   void _resetTimer() {
