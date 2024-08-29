@@ -5,6 +5,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:delta/model/model_delta.dart';
 import 'package:delta/model/api_adapter.dart';
+import 'transition_route_state.dart';
+import 'next_page.dart';
+import 'radial_expansion_route.dart';
+import 'check.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  double _opacity = 1.0;
   Future<void> _refresh() async {
     await Future.delayed(Duration(seconds: 2));
     setState(() {
@@ -50,6 +55,20 @@ class _MyHomePageState extends State<MyHomePage> {
             fontSize: 40,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                TransitionRouteState(
+                  page: const TargetPage(),
+                  transition: radialExpansionRoute,
+                  duration: const Duration(seconds: 1),
+                ),
+              );
+            },
+            icon: Image.asset('assets/images/profile.png'),
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: _refresh,
@@ -64,6 +83,28 @@ class _MyHomePageState extends State<MyHomePage> {
             }
           },
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white.withOpacity(_opacity),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Study',
+          ),
+        ],
+        currentIndex: 0,
+        selectedItemColor: Colors.amber[800],
+        onTap: (int index) {
+          if (index == 1) {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const CheckPage()),
+            );
+          }
+        },
       ),
     );
   }
@@ -423,4 +464,20 @@ class _CommentsScreenState extends State<CommentsScreen> {
       ),
     );
   }
+}
+
+class TransitionRouteState extends PageRouteBuilder {
+  final Widget page;
+  final Widget Function(BuildContext, Animation<double>, Animation<double>, Widget) transition;
+  final Duration duration;
+
+  TransitionRouteState({
+    required this.page,
+    required this.transition,
+    required this.duration,
+  }) : super(
+    pageBuilder: (context, animation, secondaryAnimation) => page,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) => transition(context, animation, secondaryAnimation, child),
+    transitionDuration: duration,
+  );
 }
