@@ -136,7 +136,7 @@ class _FilmState extends State<Film> {
       isLoading = true;
     });
     try {
-      final response = await http.get(Uri.parse('https://drf-delta-api-d357c0ce87e9.herokuapp.com/Delta/1'));
+        final response = await http.get(Uri.parse('https://drf-delta-api-d357c0ce87e9.herokuapp.com/Delta/1'));
 
       if(response.statusCode == 200) {
         setState(() {
@@ -186,8 +186,28 @@ class _FilmState extends State<Film> {
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('집사', style: TextStyle(fontFamily: 'KB', fontSize: 25, fontWeight: FontWeight.bold)),
-                        Text('총 공부시간: 100시간', style: TextStyle(fontFamily: 'KB', fontSize: 15)),
+                        isLoading
+                            ? CircularProgressIndicator() // Show a loading indicator while fetching data
+                            : dels.isNotEmpty
+                            ? Text(
+                          dels[0].idea ?? "no title", // Display the title from the first Del object
+                          style: TextStyle(fontFamily: 'KB', fontSize: 25, fontWeight: FontWeight.bold),
+                        )
+                            : Text(
+                          'No data available', // Handle case where there's no data
+                          style: TextStyle(fontFamily: 'KB', fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                        isLoading
+                            ? CircularProgressIndicator() // Show a loading indicator while fetching data
+                            : dels.isNotEmpty
+                            ? Text(
+                          dels[0].studyTime ?? "no title", // Display the title from the first Del object
+                          style: TextStyle(fontFamily: 'KB', fontSize: 15),
+                        )
+                            : Text(
+                          'No data available', // Handle case where there's no data
+                          style: TextStyle(fontFamily: 'KB', fontSize: 15),
+                        ),
                       ],
                     ),
                   ),
@@ -197,7 +217,14 @@ class _FilmState extends State<Film> {
                   ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset('assets/images/mrfresh.jpg', width: imageWidth),
+                  isLoading
+                      ? CircularProgressIndicator() // Show a loading indicator while fetching data
+                      : dels.isNotEmpty
+                    ? Image.network('https://drf-delta-api-d357c0ce87e9.herokuapp.com'+dels[0].picture, width: imageWidth):
+                    Text(
+                    'No data available', // Handle case where there's no data
+                    style: TextStyle(fontFamily: 'KB', fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 0, 0, 160),
                     child: Column(
@@ -236,7 +263,14 @@ class _FilmState extends State<Film> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: Image.asset('assets/images/mrfresh.jpg', width: imageWidth),
+                        child: isLoading
+                            ? CircularProgressIndicator() // Show a loading indicator while fetching data
+                            : dels.isNotEmpty
+                            ? Image.network('https://drf-delta-api-d357c0ce87e9.herokuapp.com'+dels[0].picture, width: imageWidth):
+                        Text(
+                          'No data available', // Handle case where there's no data
+                          style: TextStyle(fontFamily: 'KB', fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       Column(
                         children: [
@@ -293,9 +327,20 @@ class _FilmState extends State<Film> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
-                    Text(
-                      '#귀여운 #고양이 #열공',
+                    isLoading
+                        ? CircularProgressIndicator() // Show a loading indicator while fetching data
+                        : dels.isNotEmpty
+                        ? Text(
+                      dels[0].detail ?? "no title", // Display the title from the first Del object
+                      style: TextStyle(
+                        fontFamily: 'KB',
+                        fontSize: 15 * textScaleFactor,
+                        color: Colors.blueGrey,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    )
+                        : Text(
+                      'No data available', // Handle case where there's no data
                       style: TextStyle(
                         fontFamily: 'KB',
                         fontSize: 15 * textScaleFactor,
