@@ -40,7 +40,7 @@ dependencies:
   dio: ^4.0.0
   shared_preferences:
   fl_chart:
-
+  image_picker:
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -10,6 +10,7 @@ import 'next_page.dart';
 import 'radial_expansion_route.dart';
 import 'check.dart';
 import 'first_time.dart';
+import 'add_post_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,6 +58,16 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         actions: [
+          IconButton(onPressed: () {
+            Navigator.of(context).push(
+              TransitionRouteState(
+                page: const AddPostPage(),
+                transition: radialExpansionRoute,
+                duration: const Duration(seconds: 1),
+              ),
+            );
+          },
+              icon: Image.asset('assets/images/plus.png')),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(
